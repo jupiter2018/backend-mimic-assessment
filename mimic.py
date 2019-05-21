@@ -45,6 +45,7 @@ columns, so the output looks better.
 
 import random
 import sys
+import json
 
 
 def mimic_dict(filename):
@@ -57,13 +58,13 @@ def mimic_dict(filename):
     words = text.split()
     prev = ''
     for word in words:
-       if not prev in mimic_dict:
+        if not prev in mimic_dict:
            mimic_dict[prev] = [word]
-       else:
+        else:
            mimic_dict[prev].append(word)
     # Could write as: mimic_dict[prev] = mimic_dict.get(prev, []) + [word]
     # It's one line, but not totally satisfying.
-    prev = word
+        prev = word
     return mimic_dict
     
 
@@ -72,11 +73,11 @@ def print_mimic(mimic_dict, word):
     """Given mimic dict and start word, prints 200 random words."""
     # +++your code here+++
     for unused_i in range(200):
-       print word,
-       nexts = mimic_dict.get(word)          # Returns None if not found
-       if not nexts:
-          nexts = mimic_dict['']  # Fallback to '' if not found
-    word = random.choice(nexts)
+        print word,
+        nexts = mimic_dict.get(word)          # Returns None if not found
+        if not nexts:
+            nexts = mimic_dict['']  # Fallback to '' if not found
+        word = random.choice(nexts)
     # raise NotImplementedError("Get to Work!")
 
 
@@ -87,8 +88,11 @@ def main():
         sys.exit(1)
 
     d = mimic_dict(sys.argv[1])
+    print(json.dumps(d, indent=4))
     print_mimic(d, '')
-
+    
 
 if __name__ == '__main__':
+
+    
     main()
